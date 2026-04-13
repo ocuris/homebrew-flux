@@ -1,15 +1,15 @@
 class Flx < Formula
   desc "Ultra-high performance Go web framework CLI"
   homepage "https://github.com/ocuris/flux"
-  url "https://github.com/ocuris/flux/archive/refs/tags/v1.4.0.tar.gz"
-  sha256 "3c4437c08537ede93e3f300e055e09205a4a0dbe701300eeda3077d789692d57"
+  url "https://github.com/ocuris/flux/archive/refs/tags/v1.4.1.tar.gz"
+  sha256 "d0f0c12b9fcade2ace6d8282062cb3d41f8c5f278f4d3380cb56712a0f764344"
   license "MIT"
 
   depends_on "go" => :build
 
   def install
     # Professional build with stripped debug symbols for a lean binary
-    system "go", "build", *std_go_args(ldflags: "-s -w", output: bin/"flx"), "./cmd/flux"
+    system "go", "build", "-o", bin/"flx", "./cmd/flux"
   end
 
   test do
