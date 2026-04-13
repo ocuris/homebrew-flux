@@ -8,7 +8,7 @@ class Flx < Formula
   depends_on "go" => :build
 
   def install
-    # Use minimalist naming 'flx'
+    # Professional build with stripped debug symbols for a lean binary
     system "go", "build", *std_go_args(ldflags: "-s -w", output: bin/"flx"), "./cmd/flux"
   end
 
@@ -16,4 +16,3 @@ class Flx < Formula
     assert_match "FLUX CLI v", shell_output("#{bin}/flx --version")
   end
 end
-EOF
