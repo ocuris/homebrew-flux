@@ -1,0 +1,38 @@
+name: Flux Release Sync
+on:
+  repository_dispatch:
+    types: [flux-release]
+
+jobs:
+  update-formula:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Important: Fetch full history so it can push back to main
+          fetch-depth: 0
+
+      - name: Update Formula
+        run: |
+          VERSION=\${{ github.event.client_payload.version }}
+          HASH=\${{ github.event.client_payload.sha256 }}
+          
+          echo "Updating Formula to \$VERSION with Hash \$HASH"
+          
+          # Update the URL and SHA256 in the Ruby formula
+          # Handles both 1.x and 1.x.y versioning
+          sed -i "s/url .*/url \"https:\/\/github.com\/ocuris\/flux\/archive\/refs\/tags\/\$VERSION.tar.gz\"/" Formula/flx.rb
+          sed -i "s/sha256 .*/sha256 \"\$HASH\"/" Formula/flx.rb
+          
+      - name: Commit & Push
+        run: |
+          git config user.name "GoFlux Release Bot"
+          git config user.email "bot@ocuris.design"
+          git add .
+          # Check if there are changes before committing
+          if git diff-index --quiet HEAD --; then
+            echo "No changes found"
+          else
+            git commit -m "chore: automated release \${{ github.event.client_payload.version }}"
+            git push origin main
+          fi
