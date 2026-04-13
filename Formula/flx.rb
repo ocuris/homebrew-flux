@@ -1,8 +1,8 @@
 class Flx < Formula
   desc "Ultra-high performance Go web framework CLI"
   homepage "https://github.com/ocuris/flux"
-  url "https://github.com/ocuris/flux/archive/refs/tags/v1.2.2.tar.gz"
-  sha256 "040385c0e354641813a6d1e5fe421a7208a4f0b47ce584581fbddad4c300a090"
+  url "https://github.com/ocuris/flux/archive/refs/tags/v1.4.0.tar.gz"
+  sha256 "3c4437c08537ede93e3f300e055e09205a4a0dbe701300eeda3077d789692d57"
   license "MIT"
 
   depends_on "go" => :build
